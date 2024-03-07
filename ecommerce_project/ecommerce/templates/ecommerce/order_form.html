@@ -1,0 +1,103 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.pk %}Edit Order{% else %}Add Order{% endif %}</title>
+   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+   
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .order-form {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .order-form label {
+            font-weight: bold;
+        }
+        .order-form .form-control {
+            margin-bottom: 10px;
+        }
+        .save-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+        .save-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">E-Commerce App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'product_list' %}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'customer_list' %}">Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'order_list' %}">Orders</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+
+
+
+    <div class="container">
+        <h1>{% if form.instance.pk %}Edit Order{% else %}Add Order{% endif %}</h1>
+        <div class="order-form">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Save" class="save-btn">
+            </form>
+        </div>
+    </div>
+<script>
+    function validateForm() {
+        var stockQuantity = parseInt(document.getElementById('id_stock_quantity').value);
+
+        // Validate stock quantity
+        if (stockQuantity < 0) {
+            alert('Stock quantity cannot be negative.');
+            return false;
+        }
+
+        return true;
+    }
+    document.getElementById("orderForm").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+            alert("Form submitted successfully!");
+        });
+</script>
+
+
+
+   
+</body>
+</html>

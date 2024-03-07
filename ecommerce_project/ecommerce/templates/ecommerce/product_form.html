@@ -1,0 +1,184 @@
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.pk %}Edit Product{% else %}Add Product{% endif %}</title>
+   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+       
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .form-box {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .form-box h1 {
+            margin-bottom: 20px;
+        }
+        .form-box form input[type="submit"] {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">E-Commerce App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'product_list' %}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'customer_list' %}">Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'order_list' %}">Orders</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+        <div class="form-box" style="margin-right: 300px; margin-left: 300px;">
+            <h1>{% if form.instance.pk %}Edit Product{% else %}Add Product{% endif %}</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Save" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+    -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% if form.instance.pk %}Edit Product{% else %}Add Product{% endif %}</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+            .form-container {
+                border: 1px solid #ccc; 
+                border-radius: 5px;
+                padding: 20px; 
+                margin: 0 auto; 
+                max-width: 400px; 
+            }
+            input[type="text"], input[type="number"], textarea {
+                width: 100%; 
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                margin-bottom: 10px; 
+            }
+            input[type="submit"] {
+                width: 100%; 
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">E-Commerce App</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'product_list' %}">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'customer_list' %}">Customers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'order_list' %}">Orders</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br>
+        <div class="container form-container"> 
+            <h1 style="text-align: center;">{% if form.instance.pk %}Edit Product{% else %}Add Product{% endif %}</h1>
+            <form method="post" id="productForm" onsubmit="return validateForm()">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="invalid-feedback">
+                            {{ form.name.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.price.label_tag }}
+                    {{ form.price }}
+                    {% if form.price.errors %}
+                        <div class="invalid-feedback">
+                            {{ form.price.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.stock_quantity.label_tag }}
+                    {{ form.stock_quantity }}
+                    {% if form.stock_quantity.errors %}
+                        <div class="invalid-feedback">
+                            {{ form.stock_quantity.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.description.label_tag }}
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="invalid-feedback">
+                            {{ form.description.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                <input type="submit" value="Save" class="btn btn-primary">
+            </form>
+        </div>
+    
+        <script>
+            function validateForm() {
+                var price = parseFloat(document.getElementById('id_price').value);
+                var stockQuantity = parseInt(document.getElementById('id_stock_quantity').value);
+
+                if (isNaN(price) || price < 0) {
+                    alert('Price must be a non-negative number.');
+                    return false;
+                }
+     
+                if (isNaN(stockQuantity) || stockQuantity < 0) {
+                    alert('Stock quantity must be a non-negative integer.');
+                    return false;
+                }
+        
+                alert('Form saved successfully!');
+                return true;
+            }
+        </script>
+    </body>
+    </html>
+    

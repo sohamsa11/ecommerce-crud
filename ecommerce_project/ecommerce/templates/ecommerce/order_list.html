@@ -1,0 +1,107 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order List</title>
+</head>
+<body>
+    <h1>Order List</h1>
+    <ul>
+        {% for order in orders %}
+            <li><a href="{% url 'order_detail' order.pk %}">Order #{{ order.pk }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'order_create' %}">Add Order</a>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order List</title>
+   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .order-list {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .order-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .order-list li {
+            margin-bottom: 10px;
+        }
+        .order-list li a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .order-list li a:hover {
+            text-decoration: underline;
+        }
+        .add-order-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .add-order-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">E-Commerce App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'product_list' %}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'customer_list' %}">Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'order_list' %}">Orders</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+        <h1>Order List</h1>
+        <div class="order-list">
+            <ul>
+                {% for order in orders %}
+                    <li><a href="{% url 'order_detail' order.pk %}">Order #{{ order.pk }} by {{order.customer}} for {{order.product}}</a></li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'order_create' %}" class="add-order-btn">Add Order</a>
+        </div>
+    </div>
+
+    
+</body>
+</html>

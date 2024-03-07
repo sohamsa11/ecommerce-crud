@@ -1,0 +1,135 @@
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.pk %}Edit Customer{% else %}Add Customer{% endif %}</title>
+   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .form-container {
+            border: 1px solid #ccc; 
+            border-radius: 5px;
+            padding: 20px; 
+            margin: 0 auto; 
+            max-width: 400px; 
+        }
+        input[type="text"], input[type="email"], input[type="textarea"] {
+            width: 100%; 
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px; 
+        }
+        input[type="submit"] {
+            width: 100%; 
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">E-Commerce App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'product_list' %}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'customer_list' %}">Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'order_list' %}">Orders</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container form-container"> 
+        <h1 style="text-align: center;">{% if form.instance.pk %}Edit Customer{% else %}Add Customer{% endif %}</h1>
+        <form method="post" id="customerForm" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.name.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.email.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.phone_number.label_tag }}
+                {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.phone_number.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.address.label_tag }}
+                {{ form.address }}
+                {% if form.address.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.address.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <input type="submit" value="Save" class="btn btn-primary">
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        function validateForm() {
+            var phoneNumber = document.getElementById('id_phone_number').value;
+            var email = document.getElementById('id_email').value;
+    
+            // Validate mobile number
+            if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Mobile number must be a 10-digit number.',
+                });
+                return false;
+            }
+    
+            // Validate email
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid email format.',
+                });
+                return false;
+            }
+    
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Form saved successfully!',
+            });
+            return true;
+        }
+    </script>
+
+</body>
+</html>
+

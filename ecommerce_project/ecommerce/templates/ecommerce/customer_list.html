@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer List</title>
+ 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+   <!-- nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">E-Commerce App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'product_list' %}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'customer_list' %}">Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'order_list' %}">Orders</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+
+
+    <div class="container">
+        <h1 class="mt-5">Customer List</h1>
+        <ul class="list-group mt-3">
+            {% for customer in customers %}
+                <li class="list-group-item"><a style="color: rgb(205, 44, 44); font-size: larger; font-family: 'Times New Roman', Times, serif;" href="{% url 'customer_detail' customer.pk %}">{{ customer.name }}</a></li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'customer_create' %}" class="btn btn-primary mt-3">Add Customer</a>
+    </div>
+
+  
+    
+</body>
+</html>
